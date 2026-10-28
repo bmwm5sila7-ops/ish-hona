@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ishxona boshqaruvi</title>
+  <link rel="stylesheet" href="./styel.css">
+</head>
+<body>
+
+  <!-- Kirish oynasi -->
+  <div class="login-box" id="loginBox">
+    <h1>ISHXONA</h1>
+    <p>Boshqaruv tizimiga kirish</p>
+    <input id="login" placeholder="Login">
+    <input id="password" type="password" placeholder="Parol">
+    <button onclick="kirish()">Kirish</button>
+    <p id="xato"></p>
+  </div>
+
+  <!-- Asosiy dastur -->
+  <div id="main" hidden>
+    <aside class="sidebar">
+      <h2>ISHXONA</h2>
+      <p class="muted">Boshqaruv paneli</p>
+      <button class="nav active" data-page="dashboard">🏠 Bosh menyu</button>
+      <button class="nav" data-page="boss">👔 Boshliq</button>
+      <button class="nav" data-page="employees">👥 Xodimlar</button>
+      <button class="nav" data-page="departments">🏢 Bo‘limlar</button>
+      <button class="nav" data-page="salaries">💰 Maoshlar</button>
+      <button class="nav" data-page="reports">📊 Hisobotlar</button>
+      <button class="logout" onclick="chiqish()">Chiqish</button>
+    </aside>
+
+    <main class="content">
+      <header>
+        <h1 id="pageTitle">Bosh menyu</h1>
+        <span>Administrator</span>
+      </header>
+
+      <!-- Bosh menyu -->
+      <section class="page" id="dashboard">
+        <h2>Umumiy ma’lumot</h2>
+        <div class="cards">
+          <div class="card"><span>Xodimlar</span><strong id="totalEmployees">0</strong></div>
+          <div class="card"><span>Bo‘limlar</span><strong id="totalDepartments">0</strong></div>
+          <div class="card"><span>Oylik maoshlar jami</span><strong id="totalSalary">0 so‘m</strong></div>
+        </div>
+        <h2>So‘nggi xodimlar</h2>
+        <div id="recentEmployees"></div>
+      </section>
+
+      <!-- Boshliq -->
+      <section class="page" id="boss" hidden>
+        <h2>Boshliq ma’lumotlari</h2>
+        <form id="bossForm" class="form">
+          <label>Ismi<input id="bossName" required></label>
+          <label>Familiyasi<input id="bossSurname" required></label>
+          <label>Yoshi<input id="bossAge" type="number" min="1" required></label>
+          <label>Telefon<input id="bossPhone" type="tel" required></label>
+          <button>Ma’lumotlarni saqlash</button>
+        </form>
+        <p class="muted">Boshliq ma’lumotlarini shu yerdan o‘zgartirishingiz mumkin.</p>
+      </section>
+
+      <!-- Xodimlar -->
+      <section class="page" id="employees" hidden>
+        <h2 id="employeeFormTitle">Yangi xodim qo‘shish</h2>
+        <form id="employeeForm" class="form">
+          <input id="employeeId" type="hidden">
+
+          <label>Xodim rasmi
+            <input id="photo" type="file" accept="image/*">
+          </label>
+          <img id="photoPreview" class="preview" alt="Rasm ko‘rinishi" hidden>
+
+          <label>Lavozimi<input id="position" required placeholder="Masalan: Menejer"></label>
+          <label>Ismi<input id="name" required></label>
+          <label>Familiyasi<input id="surname" required></label>
+          <label>Yoshi<input id="age" type="number" min="1" required></label>
+          <label>Telefon<input id="phone" type="tel" required></label>
+
+          <label>Bo‘lim
+            <select id="department" required></select>
+          </label>
+          <label>Oylik maoshi (so‘m)
+            <input id="salary" type="number" min="0" required>
+          </label>
+
+          <div class="form-actions">
+            <button id="saveEmployee">Xodim qo‘shish</button>
+            <button type="button" class="secondary" onclick="formReset()">Bekor qilish</button>
+          </div>
+        </form>
+
+        <h2>Xodimlar ro‘yxati</h2>
+        <input id="search" placeholder="Ism, familiya yoki telefon bo‘yicha qidirish">
+        <div id="employeeList" class="employee-list"></div>
+      </section>
+[28.10.2026 16:11] 🇨🇭: <!-- Bo‘limlar -->
+      <section class="page" id="departments" hidden>
+        <h2>Yangi bo‘lim qo‘shish</h2>
+        <form id="departmentForm" class="form">
+          <label>Bo‘lim nomi<input id="departmentName" required placeholder="Masalan: Hisobchi"></label>
+          <button>Bo‘lim qo‘shish</button>
+        </form>
+        <h2>Mavjud bo‘limlar</h2>
+        <div id="departmentList"></div>
+      </section>
+
+      <!-- Maoshlar -->
+      <section class="page" id="salaries" hidden>
+        <h2>Maoshlar hisoboti</h2>
+        <div class="card">
+          <span>Barcha xodimlarning oylik maoshi jami</span>
+          <strong id="salaryTotal">0 so‘m</strong>
+        </div>
+        <div id="salaryList"></div>
+      </section>
+
+      <!-- Hisobotlar -->
+      <section class="page" id="reports" hidden>
+        <h2>Ishxona hisoboti</h2>
+        <div class="cards">
+          <div class="card"><span>Xodimlar soni</span><strong id="reportEmployees">0</strong></div>
+          <div class="card"><span>Bo‘limlar soni</span><strong id="reportDepartments">0</strong></div>
+          <div class="card"><span>O‘rtacha maosh</span><strong id="averageSalary">0 so‘m</strong></div>
+        </div>
+        <h2>Bo‘limlar bo‘yicha xodimlar</h2>
+        <div id="departmentReport"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
